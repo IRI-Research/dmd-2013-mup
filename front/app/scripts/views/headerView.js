@@ -6,10 +6,11 @@ define(
         'text!templates/widgets/link.html',
         'text!templates/widgets/image.html',
         'text!templates/widgets/youtube.html',
-        'text!templates/widgets/audio.html'
+        'text!templates/widgets/audio.html',
+        'text!templates/widgets/text.html'
     ],
     
-    function(Backbone,BaseView,headerTemplate,linkTemplate,imageTemplate,youtubeTemplate,audioTemplate){
+    function(Backbone,BaseView,headerTemplate,linkTemplate,imageTemplate,youtubeTemplate,audioTemplate,textTemplate,Paper){
         'use strict'; 
         var HeaderView = BaseView.extend({
             
@@ -50,12 +51,18 @@ define(
 
 
             addTextMode : function(){
-                alert("Ajout d'un texte");
+                $('#widget').append(_.template(textTemplate));
+                $(".textWidget").draggable();
             },
 
 
             drawMode : function(){
-                alert('Activation du mode dessin');
+                var sketchpad = Raphael.sketchpad("draw", {
+                    editing: true
+                });
+
+                $('#widget').hide();
+               
             },
 
 
@@ -65,24 +72,28 @@ define(
 
 
             addAudio : function(){
+                $('#widget').show();
                 $('#widget').append(_.template(audioTemplate));
                 $(".audioWidget").draggable();
             },
 
 
             addVideo : function(){
+                $('#widget').show();
                 $('#widget').append(_.template(youtubeTemplate));
                 $(".youtubeWidget").draggable();
             },
 
 
             addPicture : function(){
+                $('#widget').show();
                 $('#widget').append(_.template(imageTemplate));
                 $( ".imageWidget").draggable();
             },
 
 
             addLink : function(){
+                 $('#widget').show();
                  $('#widget').append(_.template(linkTemplate));
                  $( ".linkWidget" ).draggable();
                  

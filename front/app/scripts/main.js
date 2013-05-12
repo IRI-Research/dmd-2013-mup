@@ -2,19 +2,19 @@ require.config({
     paths: {
         jquery: '../components/jquery/jquery',
         bootstrap: 'vendor/bootstrap',
-        paper: 'vendor/paper',
         backbone: 'vendor/backbone-min',
         lodash: 'vendor/lodash.min',
         text: 'vendor/text',
-        jqueryUI: 'vendor/jquery-ui'
+        jqueryUI: 'vendor/jquery-ui',
+        raphael: 'vendor/raphael',
+        json2: 'vendor/json2',
+        sketchpad: 'vendor/raphael.sketchpad'
+
     },
     shim: {
         bootstrap: {
             deps: ['jquery'],
             exports: 'jquery'
-        },
-        paper : {
-            exports: 'Paper'
         },
         backbone: {
             deps:['jquery','lodash'],
@@ -23,11 +23,15 @@ require.config({
         jqueryUI: {
             deps: ['jquery'],
             exports: 'jqueryUI'
+        },
+        sketchpad: {
+            deps: ['jquery','raphael','json2'],
+            exports: 'raphaelSketchpad'
         }
     }
 });
 
-require(['app', 'jquery', 'bootstrap', 'paper','backbone','jqueryUI'], function (App, $,boostrap, Paper, Backbone,jqueryUI) {
+require(['app', 'jquery', 'bootstrap', 'backbone','jqueryUI', 'sketchpad'], function (App, $,boostrap, Backbone,jqueryUI, sketchpad) {
     'use strict';
     App.initialize();
 });
