@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MASHUP</title>
+  <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+</head>
+<body>
+  <header>
+    <h1>M-UP</h1>
+    <h2>Veuillez saisir une url :</h2>
+    <input type="url"  id="url" name=""  value="http://www.hetic.net/"/>
+    <button id="send"> Envoyer </button>
+    <button id="show"><<</button>
+  </header>
+  <div id="toolbar">
+    <button id="btn1">canvas</button>
+    <button id="btn2">2</button>
+    <button id="btn3">3</button>
+    <button id="btn4">4</button>
+    <button id="btn5">5</button>
+  </div>
+  <div id="content">
+    <iframe></iframe>
+  </div>
+  <div id="nav-right" class="hide">
+    <button id="hide">>></button>
+    <ul id="clientList">
+      <li>Tom Forlini</li>
+    </ul>
+  </div>
+</body>
+<script type="text/javascript" src="javascripts/jquery.min.js"></script>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+
+		var socket = io.connect();
+
+		//Evenement
+		$('#send').bind('click',function(){
+			url = $('#url').val();
+			socket.emit('getUrlClient',url);
+			$('#siteWeb').attr('src',url);
+		});
+		
+		socket.on('setUrl',function(url){
+	    //console.log(url);
+      console.log('YES');
+      iframe = document.getElementsByTagName('iframe')[0];
+      iframe.contentDocument.write(url);
+      var obj = $("iframe").contents();
+      console.log("title = " + obj[0].title);
+      console.log("baseURI = " + obj[0].baseURI);
+      obj[0].baseURI = "http://www.google.net/";
+      console.log("baseURI = " + obj[0].baseURI);
+
+      console.log($("iframe").contents().find("img"));
+
+      //iframe.contentDocument.write(obj[0]);
+      //console.log(obj[0].getElementsByTagName('img'));
+      //iframe.contentDocument.location.reload(true);
+		});
+	});
+
+  //nav-right
+  $('#hide').bind('click',function(){
+    $('#nav-right').removeClass('show').addClass('hide');
+  });
+  $('#show').bind('click',function(){
+    $('#nav-right').removeClass('hide').addClass('show');
+  });
+  //canvas hide/show
+  $('#btn1').bind('click',function(){
+    if($('#canvas').hasClass('hidden')){
+      $('#canvas').removeClass('hidden');
+    } else {
+      $('#canvas').addClass('hidden');
+    }
+  }); 
+</script>
+</html>
