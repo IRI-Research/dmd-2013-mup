@@ -1,0 +1,63 @@
+body #header {
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  color: white;
+  background-color: black;
+  z-index: 1000; }
+  body #header h1 {
+    font-size: 20px;
+    color: yellow;
+    margin-right: 10px; }
+  body #header a, body #header h1, body #header input, body #header ul, body #header li, body #header button {
+    display: inline-block; }
+  body #header input {
+    width: 500px; }
+body #container {
+  z-index: 1;
+  position: relative;
+  width: 100%; }
+  body #container iframe {
+    text-align: center;
+    z-index: 1;
+    border: none;
+    width: 100%; }
+  body #container #draw {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 2; }
+    body #container #draw svg {
+      z-index: 3;
+      position: absolute !important;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0; }
+  body #container #widget {
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 4;
+    background: transparent; }
+    body #container #widget .linkWidget {
+      position: absolute;
+      background-color: green; }
+    body #container #widget .imageWidget {
+      position: absolute;
+      background-color: orange; }
+    body #container #widget .audioWidget {
+      position: absolute;
+      background-color: grey; }
+    body #container #widget .youtubeWidget {
+      position: absolute;
+      background-color: red; }
+    body #container #widget .textWidget {
+      position: absolute;
+      background-color: white; }

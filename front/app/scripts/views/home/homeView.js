@@ -35,6 +35,7 @@ define(
                 var zonePrev = $(event.target).parent().parent().find('div.prevImage');
                 zonePrev.find('img').remove();
                 if (e.originalEvent.srcElement.files && e.originalEvent.srcElement.files[0]) {
+                    console.log(e.originalEvent.srcElement);
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         console.log(e);

@@ -1,0 +1,110 @@
+$iconSpritePath: "../images/glyphicons-halflings.png";
+$iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
+
+
+body{
+
+	#header{
+		
+text-align:center;
+        width:100%;
+        position:fixed;
+        z-index:10;
+        left:0;
+        top:0;
+		color:white;
+		background-color:black;
+		z-index:1000;
+
+		h1{
+			font-size:20px;
+			color:yellow;
+			margin-right:10px;
+		}
+
+		a,h1, input,ul, li, button{
+			display:inline-block;
+		}
+
+		input{
+
+			width:500px;
+		}
+	}
+
+	#container{
+		z-index:1;
+        position:relative;
+        width:100%;
+
+		iframe{
+
+			text-align:center;
+			z-index:1;
+			border:none;
+			width: 100%
+		}
+
+		#draw{
+			top:0;
+			left:0;
+			width:100%;
+			height:100%;
+			position:absolute;
+			z-index:2;
+
+			svg{
+				z-index:3;
+				position:absolute !important;
+				width:100%;
+				height:100%;
+				top:0;
+				left:0;
+			}
+
+		}
+
+		#widget{
+
+			top:0px;
+			//background-color:blue;
+			width:100%;
+			height:100%;
+			position:absolute;
+			z-index:4;
+			background:transparent;
+
+			.linkWidget{
+			
+				position:absolute;
+				background-color:green;
+			}
+
+			.imageWidget{
+
+				position:absolute;
+				background-color:orange;
+			}
+
+			.audioWidget{
+
+				position:absolute;
+				background-color:grey;	
+			}
+
+			.youtubeWidget{
+
+				position:absolute;
+				background-color:red;					
+			}
+
+			.textWidget{
+
+				position:absolute;
+				background-color:white;					
+			}
+		}
+		
+	}
+
+}
