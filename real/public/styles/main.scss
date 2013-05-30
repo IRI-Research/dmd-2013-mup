@@ -1,7 +1,6 @@
 $iconSpritePath: "../images/glyphicons-halflings.png";
 $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
-
 body{
 	#header{
 		text-align:center;
@@ -177,23 +176,28 @@ body{
 			background:transparent;
 			.linkWidget{
 				position:absolute;
-				background-color:green;
+				background-color:rgba(50,50,50,0.1);
+				border: 1px solid black;
 			}
 			.imageWidget{
 				position:absolute;
-				background-color:orange;
+				background-color:rgba(50,50,50,0.1);
+				border: 1px solid black;
 			}
 			.audioWidget{
 				position:absolute;
-				background-color:grey;	
+				background-color:rgba(50,50,50,0.1);
+				border: 1px solid black;
 			}
 			.youtubeWidget{
 				position:absolute;
-				background-color:red;					
+				background-color:rgba(50,50,50,0.1);
+				border: 1px solid black;				
 			}
 			.textWidget{
 				position:absolute;
-				background-color:white;					
+				background-color:rgba(50,50,50,0.1);
+				border: 1px solid black;				
 			}
 		}
 	}
