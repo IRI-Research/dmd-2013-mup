@@ -27,5 +27,6 @@ module.exports = (app) ->
     # POST /getPage
     @save = (req, res) ->
         console.log(req.body);
+        console.log(req.files);
 
        

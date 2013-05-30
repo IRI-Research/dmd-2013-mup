@@ -31,6 +31,7 @@ define(
             },
 
             prevImage : function(e){
+
                 var zonePrev = $(event.target).parent().parent().find('div.prevImage');;
                 if (e.originalEvent.srcElement.files && e.originalEvent.srcElement.files[0]) {
 
@@ -53,19 +54,16 @@ define(
             },
 
             prevAudio: function(e){
-
-                console.log(e.originalEvent.srcElement.files);
                 var zonePrev = $(event.target).parent().parent().find('div.prevAudio');
                 zonePrev.find('audio').remove();
                 if (e.originalEvent.srcElement.files && e.originalEvent.srcElement.files[0]) {
+                    window.save.widget.audios.push(e.originalEvent.srcElement.files[0]);
                     var reader = new FileReader();
                     reader.onload = function (e) {
-                        console.log(e);
                         //$('#blah').attr('src', e.target.result);
                         var html = "<audio controls>";
                                 html +="<source src='"+e.target.result+"' type='audio/mp3'>";
                             html += "</audio>";
-                        console.log(html);
                         zonePrev.append(html);
                     }
                     reader.readAsDataURL(e.originalEvent.srcElement.files[0]);

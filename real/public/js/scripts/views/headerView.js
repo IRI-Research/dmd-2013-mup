@@ -68,17 +68,7 @@ define(
 
             save : function(){
 
-                var save = {
-                    "widget" : {
-                        "links" : [],
-                        "images" : [],
-                        "youtube" : [],
-                        "textes" : [],
-                        "audios" : [],
-                    },
-                    "crayon":null,
-                    "html":null
-                }
+                /*
 
                 $( "div.audioWidget" ).each(function( index, widgetExtract) {
                     var widget = {};
@@ -122,18 +112,51 @@ define(
                 });
 
                 var website = $('#website');
-                save.html = website[0].contentDocument.getElementsByTagName('html')[0];
-                save.crayon = this.sketchpad.json();
+                //save.html = website[0].contentDocument.getElementsByTagName('html')[0];
+                save.crayon = this.sketchpad.json()
+                */
 
-                //Problème pour envoyer l'object a reflechir ...
-                
-                $.post("http://localhost:3013/save", save )
+
+                var formdata = new FormData();
+                //AUDIO
+                var i = 0, nbAudio = window.save.widget.audios.length;
+                for (i; nbAudio>i; i++){
+                    formdata.append("audios[]", window.save.widget.audios[i]);
+                }
+                console.log(formdata);
+    
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:3013/save",
+                    data: formdata,
+                    success: function(msg){
+                         alert( "Data Saved: " + msg );
+                    },
+                    error: function(e){
+                        console.log(e);
+                    },
+                    processData: false,
+                    contentType: false,
+                });
+                //VOIR POUR UTILISER L'AJAX
+                /*$.post("http://localhost:3013/save", formdata)
+                processData: false,
+                contentType: false,
                     .success(function(data){
                         console.log(data)
                     })
                         .error(function(error){
                             alert('Erreur pour récupérer la page');
-                });
+                });*/
+    
+                /*
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", 'http://localhost:3013/save', true);
+                xhr.send(formdata);
+                xhr.onload = function(e){
+                        console.log(e);
+                }*/
+
             },
 
 
@@ -176,6 +199,7 @@ define(
                 $('#widget').show();
                 $('#widget').append(_.template(imageTemplate));
                 $( ".imageWidget").draggable();
+
             },
 
 

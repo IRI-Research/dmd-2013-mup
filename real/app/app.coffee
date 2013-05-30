@@ -28,7 +28,7 @@ app.configure ->
   app.use express.static("#{__dirname}/../public")
   app.use express.favicon()
   app.use express.logger('dev')
-  app.use express.bodyParser()
+  app.use express.bodyParser({uploadDir:'./tmp'})
   app.use express.methodOverride()
   app.use partials()
   app.use require('connect-assets')(src: "#{__dirname}/assets")
