@@ -2,7 +2,7 @@ cons = require('consolidate')
 phantom = require('node-phantom')
 path = require('path')
 colors  = require('colors')
-phantom = require ('phantom')
+#phantom = require ('phantom')
 mongoose = require('mongoose')
 
 module.exports = (app) ->

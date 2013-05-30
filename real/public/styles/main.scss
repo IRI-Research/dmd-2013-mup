@@ -3,48 +3,153 @@ $iconWhiteSpritePath: "../images/glyphicons-halflings-white.png";
 
 
 body{
-
 	#header{
-		
-text-align:center;
+		text-align:center;
         width:100%;
         position:fixed;
-        z-index:10;
         left:0;
         top:0;
-		color:white;
-		background-color:black;
-		z-index:1000;
-
+		background-color:#6179AA;
+		z-index:200;
+		height: 58px;
 		h1{
-			font-size:20px;
+			margin: 0;
 			color:yellow;
-			margin-right:10px;
+			position: relative;
+			bottom: 25px;
 		}
-
 		a,h1, input,ul, li, button{
 			display:inline-block;
 		}
-
 		input{
-
-			width:500px;
+			position: relative;
+			bottom: 25px;
+			margin-left: 20px;
+			border: 0;
+			height: 25px;
+			width:300px;
+			border-bottom-left-radius: 7px;
+			border-top-left-radius: 7px;
+			&:active{
+				border:0;
+			}
+		}
+		#sendUrl{
+			position: relative;
+			border: 0;
+			height: 27px;
+			border-bottom-right-radius: 7px;
+			border-top-right-radius: 7px;
+			left: -6px;
+			bottom: 25px;
+			&:hover{
+				box-shadow: 0px 0px 20px #555 inset;
+			}
+		}
+		ul{
+			margin: 0;
+			margin-left: 20px;
+			padding: 0;
+			li{
+				float: left;
+				width: 62px;
+				height: 58px;
+			}
+			li:nth-child(1){
+				background: url("../images/ico/textedit.png") #6179AA no-repeat;
+				&:hover{
+					background: url("../images/ico/textedit_a.png") #6179AA no-repeat;
+				}
+				&:active{
+					background: url("../images/ico/textedit_.png") #6179AA no-repeat;
+				}
+			}
+			li:nth-child(2){
+				background: url("../images/ico/pen.png") #6179AA no-repeat;
+				&:hover{
+					background: url("../images/ico/pen_a.png") #6179AA no-repeat;
+				}
+				&:active{
+					background: url("../images/ico/pen_.png") #6179AA no-repeat;
+				}
+			}
+			li:nth-child(3){
+				background: url("../images/ico/son.png") #6179AA no-repeat;
+				&:hover{
+					background: url("../images/ico/son_a.png") #6179AA no-repeat;
+				}
+				&:active{
+					background: url("../images/ico/son_.png") #6179AA no-repeat;
+				}
+			}
+			li:nth-child(4){
+				background: url("../images/ico/son.png") #6179AA no-repeat;
+				&:hover{
+					background: url("../images/ico/son_a.png") #6179AA no-repeat;
+				}
+				&:active{
+					background: url("../images/ico/son_.png") #6179AA no-repeat;
+				}
+			}
+			li:nth-child(5){
+				background: url("../images/ico/textadd.png") #6179AA no-repeat;
+				&:hover{
+					background: url("../images/ico/textadd_a.png") #6179AA no-repeat;
+				}
+				&:active{
+					background: url("../images/ico/textadd_.png") #6179AA no-repeat;
+				}
+			}
+			li:nth-child(6){
+				background: url("../images/ico/video.png") #6179AA no-repeat;
+				&:hover{
+					background: url("../images/ico/video_a.png") #6179AA no-repeat;
+				}
+				&:active{
+					background: url("../images/ico/video_.png") #6179AA no-repeat;
+				}
+			}
+			li:nth-child(7){
+				background: url("../images/ico/photo.png") #6179AA no-repeat;
+				&:hover{
+					background: url("../images/ico/photo_a.png") #6179AA no-repeat;
+				}
+				&:active{
+					background: url("../images/ico/photo_.png") #6179AA no-repeat;
+				}
+			}
+			li:nth-child(8){
+				background: url("../images/ico/link.png") #6179AA no-repeat;
+				&:hover{
+					background: url("../images/ico/link_a.png") #6179AA no-repeat;
+				}
+				&:active{
+					background: url("../images/ico/link_.png") #6179AA no-repeat;
+				}
+			}
+		}
+		#save{
+			height: 25px;
+			border: 0;
+			border-radius: 7px;
+			margin-left: 20px;
+			position: relative;
+			bottom: 25px;
+			&:hover{
+				box-shadow: 0px 0px 20px #555 inset;
+			}
 		}
 	}
-
 	#container{
 		z-index:1;
         position:relative;
         width:100%;
-
 		iframe{
-
 			text-align:center;
 			z-index:1;
 			border:none;
 			width: 100%
 		}
-
 		#draw{
 			top:0;
 			left:0;
@@ -52,7 +157,6 @@ text-align:center;
 			height:100%;
 			position:absolute;
 			z-index:2;
-
 			svg{
 				z-index:3;
 				position:absolute !important;
@@ -63,9 +167,7 @@ text-align:center;
 			}
 
 		}
-
 		#widget{
-
 			top:0px;
 			//background-color:blue;
 			width:100%;
@@ -73,38 +175,26 @@ text-align:center;
 			position:absolute;
 			z-index:4;
 			background:transparent;
-
 			.linkWidget{
-			
 				position:absolute;
 				background-color:green;
 			}
-
 			.imageWidget{
-
 				position:absolute;
 				background-color:orange;
 			}
-
 			.audioWidget{
-
 				position:absolute;
 				background-color:grey;	
 			}
-
 			.youtubeWidget{
-
 				position:absolute;
 				background-color:red;					
 			}
-
 			.textWidget{
-
 				position:absolute;
 				background-color:white;					
 			}
 		}
-		
 	}
-
 }
