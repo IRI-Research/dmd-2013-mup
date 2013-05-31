@@ -3,7 +3,7 @@ require.config({
         jquery: '../components/jquery/jquery',
         bootstrap: 'vendor/bootstrap',
         backbone: 'vendor/backbone-min',
-        lodash: 'vendor/lodash.min',
+        underscore: 'vendor/underscore-min',
         text: 'vendor/text',
         jqueryUI: 'vendor/jquery-ui',
         raphael: 'vendor/raphael',
@@ -17,7 +17,7 @@ require.config({
             exports: 'jquery'
         },
         backbone: {
-            deps:['jquery','lodash'],
+            deps:['jquery','underscore'],
             exports: 'Backbone'
         },
         jqueryUI: {

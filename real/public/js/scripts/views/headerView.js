@@ -68,31 +68,48 @@ define(
 
             save : function(){
 
-                /*
+               
+                var formdata = new FormData();
 
                 $( "div.audioWidget" ).each(function( index, widgetExtract) {
-                    var widget = {};
+
                     var widgetExtract = $(widgetExtract);
-                    widget.position = widgetExtract.css(["top", "left"]);
-                    widget.file = widgetExtract.find("div.prevAudio")[0].children[0].currentSrc;
-                    save.widget.audios.push(widget);
+                    var id = widgetExtract[0].getAttribute("data-audioId");
+                    var audioWidget = _.find(window.save.widget.audios, function(audio){ return audio.id == id; });
+                    audioWidget.position = widgetExtract.css(["top", "left"]);                    console.log(window.save.widget.audios);
+
+
                 });
 
+                var i;
+                var nbAudio = window.save.widget.audios.length;
+
+                for (i=0; nbAudio>i; i++){
+                    formdata.append("audiosFile[]", window.save.widget.audios[i].file);
+                    var audio = {};
+                    audio.position = window.save.widget.audios[i].position;
+                    audio.id = window.save.widget.audios[i].id;
+                    formdata.append("audios[]", audio);
+                }
+
+                /*
                 $( "div.imageWidget" ).each(function( index, widgetExtract) {
                     var widget = {};
                     var widgetExtract = $(widgetExtract);
                     widget.position = widgetExtract.css(["top", "left"]);
-                    widget.file = widgetExtract.find("div.prevImage")[0].children[0].currentSrc;
+                    widgetStatut = widgetExtract.find("div.prevImage")[0].children[0].currentSrc;
+                    console.log(widgetStatut);
                     save.widget.images.push(widget);
                 });
                 
+
                 $( "div.linkWidget" ).each(function( index, widgetExtract) {
                     var widget = {};
                     var widgetExtract = $(widgetExtract);
                     widget.position = widgetExtract.css(["top", "left"]);
                     widget.titre = widgetExtract[0].children[2].innerText;
                     widget.contenu = widgetExtract[0].children[4].innerText;
-                    save.widget.links.push(widget);
+                    window.save.widget.links.push(widget);
                 });
 
                 $( "div.youtubeWidget" ).each(function( index, widgetExtract) {
@@ -100,7 +117,7 @@ define(
                     var widgetExtract = $(widgetExtract);
                     widget.position = widgetExtract.css(["top", "left"]);
                     widget.idYb = widgetExtract[0].children[2].children[1].value;
-                    save.widget.youtube.push(widget);
+                    window.save.widget.youtube.push(widget);
                 });
 
                 $( "div.textWidget" ).each(function( index, widgetExtract) {
@@ -108,22 +125,64 @@ define(
                     var widgetExtract = $(widgetExtract);
                     widget.position = widgetExtract.css(["top", "left"]);
                     widget.content = widgetExtract[0].children[2].innerText;
-                    save.widget.textes.push(widget);
+                    window.save.widget.textes.push(widget);
                 });
 
                 var website = $('#website');
                 //save.html = website[0].contentDocument.getElementsByTagName('html')[0];
-                save.crayon = this.sketchpad.json()
-                */
+                //window.save.crayon = this.sketchpad.json();
 
 
+                // PRÉPARATION DU FORMDATA
                 var formdata = new FormData();
-                //AUDIO
-                var i = 0, nbAudio = window.save.widget.audios.length;
-                for (i; nbAudio>i; i++){
+                var i = 0, 
+                nbAudioFile = window.save.widget.audiosFile.length,
+                nbImageFile = window.save.widget.imagesFile.length,
+                nbAudio = window.save.widget.audios.length,
+                nbImage = window.save.widget.images.length,
+                nbLink = window.save.widget.links.length,
+                nbYoutube = window.save.widget.youtube.length,
+                nbTextes = window.save.widget.textes.length;
+
+
+
+                for (i=0; nbAudioFile>i; i++){
+                    console.log(window.save.widget.audios[i]);
+                    formdata.append("audiosFile[]", window.save.widget.audiosFile[i]);
+                }
+
+                for (i=0; nbImageFile>i; i++){
+                    formdata.append("imagesFile[]", window.save.widget.imagesFile[i]);
+                }
+
+                
+                for (i=0; nbAudio>i; i++){
                     formdata.append("audios[]", window.save.widget.audios[i]);
                 }
                 console.log(formdata);
+                /*
+                i = 0;
+                for (i; nbImageFile>i; i++){
+                    formdata.append("imagesFile[]", window.save.widget.images[i]);
+                }
+                i = 0;
+                for (i; nbLink>i; i++){
+                    formdata.append("links[]", window.save.widget.links[i]);
+                }
+
+                i = 0;
+                for (i; nbYoutube>i; i++){
+                    formdata.append("youtube[]", window.save.widget.youtube[i]);
+                }
+
+                i = 0;
+                for (i; nbTextes>i; i++){
+                    formdata.append("textes[]", window.save.widget.textes[i]);
+                }
+
+                */
+
+  
     
                 $.ajax({
                     type: "POST",
@@ -138,24 +197,6 @@ define(
                     processData: false,
                     contentType: false,
                 });
-                //VOIR POUR UTILISER L'AJAX
-                /*$.post("http://localhost:3013/save", formdata)
-                processData: false,
-                contentType: false,
-                    .success(function(data){
-                        console.log(data)
-                    })
-                        .error(function(error){
-                            alert('Erreur pour récupérer la page');
-                });*/
-    
-                /*
-                var xhr = new XMLHttpRequest();
-                xhr.open("POST", 'http://localhost:3013/save', true);
-                xhr.send(formdata);
-                xhr.onload = function(e){
-                        console.log(e);
-                }*/
 
             },
 

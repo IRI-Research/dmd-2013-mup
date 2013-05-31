@@ -7,9 +7,11 @@ define(['Router'], function (Router) {
                     "widget" : {
                         "links" : [],
                         "images" : [],
+                        "imagesFile" : [],
                         "youtube" : [],
                         "textes" : [],
                         "audios" : [],
+                        "audiosFile" : [],
                     },
                     "crayon":null,
                     "html":null
