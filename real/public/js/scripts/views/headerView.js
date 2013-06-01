@@ -70,19 +70,20 @@ define(
 
                
                 var formdata = new FormData();
+                var nbAudio = window.save.widget.audios.length;
+                var nbImage = window.save.widget.images.length;
+                var nbLink = window.save.widget.links.length;
+                var nbYoutube = window.save.widget.youtube.length;
+                var i;
 
                 $( "div.audioWidget" ).each(function( index, widgetExtract) {
-
                     var widgetExtract = $(widgetExtract);
                     var id = widgetExtract[0].getAttribute("data-audioId");
                     var audioWidget = _.find(window.save.widget.audios, function(audio){ return audio.id == id; });
-                    audioWidget.position = widgetExtract.css(["top", "left"]);                    console.log(window.save.widget.audios);
+                    audioWidget.position = widgetExtract.css(["top", "left"]);                   
 
 
                 });
-
-                var i;
-                var nbAudio = window.save.widget.audios.length;
 
                 for (i=0; nbAudio>i; i++){
                     formdata.append("audiosFile[]", window.save.widget.audios[i].file);
@@ -92,96 +93,65 @@ define(
                     formdata.append("audios[]", audio);
                 }
 
-                /*
-                $( "div.imageWidget" ).each(function( index, widgetExtract) {
-                    var widget = {};
-                    var widgetExtract = $(widgetExtract);
-                    widget.position = widgetExtract.css(["top", "left"]);
-                    widgetStatut = widgetExtract.find("div.prevImage")[0].children[0].currentSrc;
-                    console.log(widgetStatut);
-                    save.widget.images.push(widget);
-                });
                 
+                $( "div.imageWidget" ).each(function( index, widgetExtract) {
+                    var widgetExtract = $(widgetExtract);
+                    var id = widgetExtract[0].getAttribute("data-imageId");
+                    var imageWidget = _.find(window.save.widget.images, function(image){ return image.id == id; });
+                    imageWidget.position = widgetExtract.css(["top", "left"]);
+                });
 
+                for (i=0; nbImage>i; i++){
+                    formdata.append("imagesFile[]", window.save.widget.images[i].file);
+                    var image = {};
+                    image.position = window.save.widget.images[i].position;
+                    image.id = window.save.widget.images[i].id;
+                    formdata.append("image[]", audio);
+                }
+                
+                
                 $( "div.linkWidget" ).each(function( index, widgetExtract) {
                     var widget = {};
                     var widgetExtract = $(widgetExtract);
                     widget.position = widgetExtract.css(["top", "left"]);
                     widget.titre = widgetExtract[0].children[2].innerText;
                     widget.contenu = widgetExtract[0].children[4].innerText;
-                    window.save.widget.links.push(widget);
+                    //window.save.widget.links.push(widget);
+                    formdata.append("links[]", widget);
                 });
 
-                $( "div.youtubeWidget" ).each(function( index, widgetExtract) {
-                    var widget = {};
-                    var widgetExtract = $(widgetExtract);
-                    widget.position = widgetExtract.css(["top", "left"]);
-                    widget.idYb = widgetExtract[0].children[2].children[1].value;
-                    window.save.widget.youtube.push(widget);
-                });
 
                 $( "div.textWidget" ).each(function( index, widgetExtract) {
                     var widget = {};
                     var widgetExtract = $(widgetExtract);
                     widget.position = widgetExtract.css(["top", "left"]);
                     widget.content = widgetExtract[0].children[2].innerText;
-                    window.save.widget.textes.push(widget);
+                    //window.save.widget.textes.push(widget);
+                    formdata.append("texts[]", widget);
                 });
 
+                if(_.isFunction(this.sketchpad.json)){
+                   formdata.append("draw", this.sketchpad.json());
+                }
+
+
+               
+                $( "div.youtubeWidget" ).each(function( index, widgetExtract) {
+                    var widget = {};
+                    var widgetExtract = $(widgetExtract);
+                    widget.position = widgetExtract.css(["top", "left"]);
+                    widget.idYb = widgetExtract[0].children[2].children[1].value;
+                    //window.save.widget.youtube.push(widget);
+                    formdata.append("youtube[]", widget);
+                });
+
+
                 var website = $('#website');
-                //save.html = website[0].contentDocument.getElementsByTagName('html')[0];
-                //window.save.crayon = this.sketchpad.json();
+                var content = website[0].contentDocument.getElementsByTagName('html')[0].outerHTML;
 
-
-                // PRÉPARATION DU FORMDATA
-                var formdata = new FormData();
-                var i = 0, 
-                nbAudioFile = window.save.widget.audiosFile.length,
-                nbImageFile = window.save.widget.imagesFile.length,
-                nbAudio = window.save.widget.audios.length,
-                nbImage = window.save.widget.images.length,
-                nbLink = window.save.widget.links.length,
-                nbYoutube = window.save.widget.youtube.length,
-                nbTextes = window.save.widget.textes.length;
-
-
-
-                for (i=0; nbAudioFile>i; i++){
-                    console.log(window.save.widget.audios[i]);
-                    formdata.append("audiosFile[]", window.save.widget.audiosFile[i]);
+                if(content != '<iframe id="website" src="about:blank"></iframe>'){
+                    formdata.append("siteHtml[]", content);
                 }
-
-                for (i=0; nbImageFile>i; i++){
-                    formdata.append("imagesFile[]", window.save.widget.imagesFile[i]);
-                }
-
-                
-                for (i=0; nbAudio>i; i++){
-                    formdata.append("audios[]", window.save.widget.audios[i]);
-                }
-                console.log(formdata);
-                /*
-                i = 0;
-                for (i; nbImageFile>i; i++){
-                    formdata.append("imagesFile[]", window.save.widget.images[i]);
-                }
-                i = 0;
-                for (i; nbLink>i; i++){
-                    formdata.append("links[]", window.save.widget.links[i]);
-                }
-
-                i = 0;
-                for (i; nbYoutube>i; i++){
-                    formdata.append("youtube[]", window.save.widget.youtube[i]);
-                }
-
-                i = 0;
-                for (i; nbTextes>i; i++){
-                    formdata.append("textes[]", window.save.widget.textes[i]);
-                }
-
-                */
-
   
     
                 $.ajax({
@@ -217,8 +187,10 @@ define(
             },
 
 
-            effacerMode : function(){
-                alert('efface du dessin');
+            effacerMode : function(){ 
+                if(_.isFunction(this.sketchpad.json)){
+                    this.sketchpad.undo();
+                }
             },
 
 

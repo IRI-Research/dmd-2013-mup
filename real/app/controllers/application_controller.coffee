@@ -4,6 +4,7 @@ path = require('path')
 colors  = require('colors')
 phantom = require ('phantom')
 mongoose = require('mongoose')
+util = require('util')
 
 module.exports = (app) ->
   class app.ApplicationController

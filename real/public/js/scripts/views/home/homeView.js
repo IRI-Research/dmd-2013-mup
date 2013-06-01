@@ -27,14 +27,63 @@ define(
             },
 
             closeWidget : function(e){
-                 $(event.target).parent().remove();
+
+                var widget = $(event.target)[0].offsetParent;
+                console.log(widget.classList[0]);
+                var type = widget.classList[0];
+                switch (type) 
+                { 
+                    case "audioWidget": 
+                        console.log("audio");
+                        var id = widget.getAttribute("data-audioId");
+                        if(id != null){
+                            alert(id);
+                            var audioWidget = _.reject(window.save.widget.audios, function(audio){ return audio.id == id; });
+                            window.save.widget.audios = audioWidget;
+                        }
+                    break; 
+                    case "imageWidget": 
+                        console.log("image");
+                        var id = widget.getAttribute("data-imageId");
+                        if(id != null){
+                            var imageWidget = _.reject(window.save.widget.images, function(image){ return image.id == id; });
+                            window.save.widget.images = imageWidget;
+                        }
+                    break; 
+                    /*case "linkWidget": 
+                        console.log("link");
+                    break; 
+                    case "youtubeWidget": 
+                        console.log("youtube");
+                    break; 
+                    case "textWidget": 
+                        console.log("text");
+                    break;*/
+                }
+                 
+                $(event.target).parent().remove();
             },
 
             prevImage : function(e){
 
                 var zonePrev = $(event.target).parent().parent().find('div.prevImage');
                 if (e.originalEvent.srcElement.files && e.originalEvent.srcElement.files[0]) {
-                    window.save.widget.imagesFile.push(e.originalEvent.srcElement.files[0]);
+                    //je cherche le dernier fichier images pre-save
+                    var divParent = $(e)[0].target.offsetParent;
+                    if(divParent.getAttribute("data-imageId") == null){
+                        window.save.lastId = parseInt(window.save.lastId)+1;
+                        var id = window.save.lastId;
+                        divParent.setAttribute('data-imageId',id);
+                        var widgetImage = {
+                            id : id,
+                            file : e.originalEvent.srcElement.files[0],
+                        }
+                        window.save.widget.images.push(widgetImage);
+                    }else{
+                        var imageId = zonePrev[0].parentNode.getAttribute("data-imageId");
+                        var imageWidget = _.find(window.save.widget.images, function(image){ return image.id == imageId; });
+                        imageWidget.file = e.originalEvent.srcElement.files[0];
+                    }
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         //$('#blah').attr('src', e.target.result);
@@ -60,11 +109,11 @@ define(
                 zonePrev.find('audio').remove();
                 if (e.originalEvent.srcElement.files && e.originalEvent.srcElement.files[0]) {
                     //je cherche le dernier fichier audio pre-save
-                    lastAudio = window.save.widget.audios.length;
                     // je check si c'est une edition ou un nouveau avec la présente non null de data-audioid
                     var divParent = $(e)[0].target.offsetParent;
-                    var id = lastAudio+1;
                     if(divParent.getAttribute("data-audioId") == null){
+                        window.save.lastId = parseInt(window.save.lastId)+1;
+                        var id = window.save.lastId;
                         divParent.setAttribute('data-audioId',id);
                         //window.save.widget.audiosFile.push(e.originalEvent.srcElement.files[0]);
                         var widgetAudio = {

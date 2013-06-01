@@ -4,6 +4,7 @@ define(['Router'], function (Router) {
     var initialize = function(){
 		Router.initialize();
 		window.save = {
+                    "lastId":0,
                     "widget" : {
                         "links" : [],
                         "images" : [],
