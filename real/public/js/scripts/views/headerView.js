@@ -90,7 +90,7 @@ define(
                     var audio = {};
                     audio.position = window.save.widget.audios[i].position;
                     audio.id = window.save.widget.audios[i].id;
-                    formdata.append("audios[]", audio);
+                    formdata.append("audios[]", JSON.stringify(audio));
                 }
 
                 
@@ -106,7 +106,7 @@ define(
                     var image = {};
                     image.position = window.save.widget.images[i].position;
                     image.id = window.save.widget.images[i].id;
-                    formdata.append("image[]", audio);
+                    formdata.append("images[]", JSON.stringify(image));
                 }
                 
                 
@@ -117,7 +117,7 @@ define(
                     widget.titre = widgetExtract[0].children[2].innerText;
                     widget.contenu = widgetExtract[0].children[4].innerText;
                     //window.save.widget.links.push(widget);
-                    formdata.append("links[]", widget);
+                    formdata.append("links[]", JSON.stringify(widget));
                 });
 
 
@@ -127,7 +127,7 @@ define(
                     widget.position = widgetExtract.css(["top", "left"]);
                     widget.content = widgetExtract[0].children[2].innerText;
                     //window.save.widget.textes.push(widget);
-                    formdata.append("texts[]", widget);
+                    formdata.append("texts[]", JSON.stringify(widget));
                 });
 
                 if(_.isFunction(this.sketchpad.json)){
@@ -142,7 +142,7 @@ define(
                     widget.position = widgetExtract.css(["top", "left"]);
                     widget.idYb = widgetExtract[0].children[2].children[1].value;
                     //window.save.widget.youtube.push(widget);
-                    formdata.append("youtube[]", widget);
+                    formdata.append("youtube[]", JSON.stringify(widget));
                 });
 
 
