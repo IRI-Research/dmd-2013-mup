@@ -12,9 +12,10 @@ mongoose.connect "mongodb://admin:mupOSEF@kevinlarosa.fr:27017/mup", { db: { saf
   console.log "Mongoose - connection success"
 
 
+###
 
 data = new mongoose.Schema(
-    widget:[
+    widget:[{
         type:String
         position:Array
         file:
@@ -23,10 +24,60 @@ data = new mongoose.Schema(
         url:
             type:String
             default:""
-    ]
+        idYb:
+            type:String
+            default:""
+        content:
+            type:String
+            default:""
+        titre:
+            type:String
+            default:""
+        url:
+            type:String
+            default:""
+    }]
+    draw:
+        type:String
+        default:""
+    html:
+        type:String
+        default:""
+)
+###
+
+
+widget = new mongoose.Schema(
+    type:String
+    position:
+        left: String 
+        top: String
+    file:
+        type:String
+    url:
+        type:String
+    idYb:
+        type:String
+    content:
+        type:String
+    titre:
+        type:String
+    url:
+        type:String
+        default:""
 )
 
-mongoose.model "data", data
+data = new mongoose.Schema(
+    widget:[widget]
+    draw:
+        type:String
+        default:""
+    html:
+        type:String
+        default:""
+)
+
+dataModel = mongoose.model "data", data
 
 #Permet de voir si ce widget est envoyé en analysant les name key
 validData = (data,listData)->
@@ -55,16 +106,19 @@ module.exports = (app) ->
                     page.evaluate (->  document.getElementsByTagName("html")[0].innerHTML), (result) ->
                         res.json(result)
                         ph.exit()
-    # POST /getPage
+    # POST /save
     @save = (req, res) ->
         Mup = mongoose.model('data')
         mup = new Mup ({
                 widget : []
+                draw : null
+                html : null
             })
         
-        # je dois controler que la clé existe
+        # NB : je dois controler que la clé existe
         #Audio
         listData = _.keys(req.body)
+        console.log listData
         if validData('audios',listData)
             if req.body.audios[0][0] == "{"
                 widgetAudio = JSON.parse(req.body.audios)
@@ -78,25 +132,88 @@ module.exports = (app) ->
                     widgetAudio.file = req.files.audiosFile[0][_i].path
                     mup.widget.push(widgetAudio)
 
-        # Images
-        ###
-        console.log req.body.images[0][0]
-        if req.body.images[0][0] == "{"
-            widgetImages = JSON.parse(req.body.audios)
-            widgetImages.type = "image"
-            widgetImages.file = req.files.imagesFile.path
-            mup.widget.push(widgetAudio) 
+        #Images
+        if validData('images',listData)
+            if req.body.images[0][0] == "{"
+                widgetImages = JSON.parse(req.body.images)
+                widgetImages.type = "image"
+                widgetImages.file = req.files.imagesFile.path
+                mup.widget.push( widgetImages)
+            else
+                for j in req.body.images[0]
+                    widgetImage = JSON.parse(req.body.images[0][_j])
+                    widgetImage.type = "image"
+                    widgetImage.file = req.files.imagesFile[0][_j].path
+                    mup.widget.push(widgetImage)
+
+        #Youtube
+        if validData('youtube',listData)
+            if req.body.youtube[0][0] == "{"
+                widgetYoutube = JSON.parse(req.body.youtube)
+                widgetYoutube.type = "youtube"
+                mup.widget.push(widgetYoutube)
+            else
+                for k in req.body.youtube[0]
+                    widgetYoutube = JSON.parse(req.body.youtube[0][_k])
+                    widgetYoutube.type = "youtube"
+                    mup.widget.push(widgetYoutube)
+
+        #texts
+        if validData('texts',listData)
+            if req.body.texts[0][0] == "{"
+                widgetTexts = JSON.parse(req.body.texts)
+                widgetTexts.type = "texts"
+                mup.widget.push(widgetTexts)
+            else
+                for l in req.body.texts[0]
+                    widgetTexts = JSON.parse(req.body.texts[0][_l])
+                    widgetTexts.type = "texts"
+                    mup.widget.push(widgetTexts)
+
+        #links
+        if validData('links',listData)
+            if req.body.links[0][0] == "{"
+                widgetLinks = JSON.parse(req.body.links)
+                widgetLinks.type = "links"
+                mup.widget.push(widgetLinks)
+            else
+                for m in req.body.links[0]
+                    widgetLinks = JSON.parse(req.body.links[0][_m])
+                    widgetLinks.type = "links"
+                    #widgetLinks.position.top = "links"
+                    #widgetLinks.position.left = "links"
+                    mup.widget.push(widgetLinks)
+                    console.log mup
+                    
+        #Draw
+        if validData('draw',listData)
+            #mup.widget.push(draw:JSON.parse(req.body.draw))
+            mup.draw = req.body.draw
+
+        if validData('siteHtml',listData)
+            mup.html = req.body.siteHtml[0]
+
+         mup.save (err, resource) ->
+            console.log "Problème de sauvegade dans mongo: " + err if err?
+            res.send(201,mup._id)
+
+    # GET getpage /getpage?id=
+    @getPage = (req, res) ->
+        id = req.query.id
+        if typeof(id) != "undefined"
+            query = dataModel.find(null);
+            query.find(
+                _id : id
+            )
+            query.exec((err, data)->
+                if (err) 
+                    throw err; 
+                res.send(data);
+            )
         else
-            console.log ('plusieur images')
-            for i in req.body.images[0]
-                console.log "ici"
-                console.log req.body.images
-                widgetImage = JSON.parse(req.body.images[0][_i])
-                widgetImage.type = "image"
-                widgetImage.file = req.files.imagesFile[0][_i].path
-                mup.widget.push(widgetImage)
-        ###
-        console.log mup
+           res.send(404,"ID NOT FOUND")
+
+
 
 
 

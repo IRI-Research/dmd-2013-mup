@@ -115,7 +115,7 @@ define(
                     var widgetExtract = $(widgetExtract);
                     widget.position = widgetExtract.css(["top", "left"]);
                     widget.titre = widgetExtract[0].children[2].innerText;
-                    widget.contenu = widgetExtract[0].children[4].innerText;
+                    widget.url = widgetExtract[0].children[4].innerText;
                     //window.save.widget.links.push(widget);
                     formdata.append("links[]", JSON.stringify(widget));
                 });
@@ -159,7 +159,8 @@ define(
                     url: "http://localhost:3013/save",
                     data: formdata,
                     success: function(msg){
-                         alert( "Data Saved: " + msg );
+                        alert("Votre mup est sauvegarder sous l'id " +msg)
+                        window.location = "http://localhost:3013/getpage?id="+msg
                     },
                     error: function(e){
                         console.log(e);

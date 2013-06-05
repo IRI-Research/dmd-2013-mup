@@ -6,6 +6,8 @@ module.exports = (app) ->
 
   app.post '/save', app.ApplicationController.save
 
+  app.get '/getPage', app.ApplicationController.getPage
+
   # Error handling (No previous route found. Assuming it’s a 404)
   app.get '/*', (req, res) ->
     NotFound res
