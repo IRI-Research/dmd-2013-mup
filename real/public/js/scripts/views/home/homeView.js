@@ -22,7 +22,9 @@ define(
             },
             
             render: function(){
-                console.log('je render la home');
+                $('#website').empty();
+                $('#draw').empty();
+                $('#widget').empty();
                 return this;
             },
 
@@ -50,15 +52,6 @@ define(
                             window.save.widget.images = imageWidget;
                         }
                     break; 
-                    /*case "linkWidget": 
-                        console.log("link");
-                    break; 
-                    case "youtubeWidget": 
-                        console.log("youtube");
-                    break; 
-                    case "textWidget": 
-                        console.log("text");
-                    break;*/
                 }
                  
                 $(event.target).parent().remove();

@@ -38,7 +38,7 @@ define(
 
             template: _.template(headerTemplate),
 
-            sketchpad : {},
+            
 
             changeSite : function(){
                 var url, test;
@@ -79,8 +79,11 @@ define(
                 $( "div.audioWidget" ).each(function( index, widgetExtract) {
                     var widgetExtract = $(widgetExtract);
                     var id = widgetExtract[0].getAttribute("data-audioId");
-                    var audioWidget = _.find(window.save.widget.audios, function(audio){ return audio.id == id; });
-                    audioWidget.position = widgetExtract.css(["top", "left"]);                   
+                    console.log(id);
+                    if(id != null){
+                        var audioWidget = _.find(window.save.widget.audios, function(audio){ return audio.id == id; });
+                        audioWidget.position = widgetExtract.css(["top", "left"]);  
+                    }    
 
 
                 });
@@ -90,6 +93,7 @@ define(
                     var audio = {};
                     audio.position = window.save.widget.audios[i].position;
                     audio.id = window.save.widget.audios[i].id;
+                    console.log(audio);
                     formdata.append("audios[]", JSON.stringify(audio));
                 }
 
@@ -97,8 +101,10 @@ define(
                 $( "div.imageWidget" ).each(function( index, widgetExtract) {
                     var widgetExtract = $(widgetExtract);
                     var id = widgetExtract[0].getAttribute("data-imageId");
-                    var imageWidget = _.find(window.save.widget.images, function(image){ return image.id == id; });
-                    imageWidget.position = widgetExtract.css(["top", "left"]);
+                    if(id != null){
+                        var imageWidget = _.find(window.save.widget.images, function(image){ return image.id == id; });
+                        imageWidget.position = widgetExtract.css(["top", "left"]);
+                    }
                 });
 
                 for (i=0; nbImage>i; i++){
@@ -126,12 +132,11 @@ define(
                     var widgetExtract = $(widgetExtract);
                     widget.position = widgetExtract.css(["top", "left"]);
                     widget.content = widgetExtract[0].children[2].innerText;
-                    //window.save.widget.textes.push(widget);
                     formdata.append("texts[]", JSON.stringify(widget));
                 });
 
-                if(_.isFunction(this.sketchpad.json)){
-                   formdata.append("draw", this.sketchpad.json());
+                if(_.isFunction(window.sketchpad.json)){
+                   formdata.append("draw", window.sketchpad.json());
                 }
 
 
@@ -154,14 +159,18 @@ define(
                 }
   
     
+
                 $.ajax({
                     type: "POST",
                     url: "http://localhost:3013/save",
                     data: formdata,
                     success: function(msg){
-                        alert("Votre mup est sauvegarder sous l'id " +msg)
-                        window.location = "http://localhost:3013/getpage?id="+msg
-                    },
+                        this.router.navigate("getMup/"+msg, true);
+                        window.location.reload();
+                        //window.location='http://localhost:3013/#getMup/'+msg;
+
+
+                    }.bind(this),
                     error: function(e){
                         console.log(e);
                     },
@@ -179,9 +188,6 @@ define(
 
 
             drawMode : function(){
-                this.sketchpad = Raphael.sketchpad("draw", {
-                    editing: true
-                });
 
                 $('#widget').hide();
                
@@ -189,8 +195,8 @@ define(
 
 
             effacerMode : function(){ 
-                if(_.isFunction(this.sketchpad.json)){
-                    this.sketchpad.undo();
+                if(_.isFunction(window.sketchpad.json)){
+                    window.sketchpad.undo();
                 }
             },
 

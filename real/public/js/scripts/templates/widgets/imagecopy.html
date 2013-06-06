@@ -1,4 +1,4 @@
-<div style="top:300px;left:50%"  class="imageWidget">
+<div style="<% if (left != null && top != null){ %>top:<%= top%>;left:<%= left%><% } else {%> top:50%; left:50% <%}%>"  class="imageWidget">
     <button class="closeWidget">x</button><br/>
     <div>
     	<h3>Veuilliez saisir une image</h3>

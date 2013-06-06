@@ -6,7 +6,7 @@ module.exports = (app) ->
 
   app.post '/save', app.ApplicationController.save
 
-  app.get '/getPage', app.ApplicationController.getPage
+  app.get '/getMup', app.ApplicationController.getMup
 
   # Error handling (No previous route found. Assuming it’s a 404)
   app.get '/*', (req, res) ->

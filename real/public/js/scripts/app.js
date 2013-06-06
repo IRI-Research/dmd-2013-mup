@@ -18,6 +18,9 @@ define(['Router'], function (Router) {
                     "html":null
                
         }
+        window.sketchpad = Raphael.sketchpad("draw", {
+             editing: true
+        });
 	}
     
     return {initialize:initialize};

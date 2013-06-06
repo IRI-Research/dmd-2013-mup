@@ -7,44 +7,12 @@ mongoose = require('mongoose')
 util = require('util')
 _ = require('underscore')
 
-mongoose.connect "mongodb://admin:mupOSEF@kevinlarosa.fr:27017/mup", { db: { safe: true }}, (err) ->
+#mongoose.connect "mongodb://admin:mupOSEF@kevinlarosa.fr:27017/mup", { db: { safe: true }}, (err) ->
+mongoose.connect "mongodb://localhost:27017/mup", { db: { safe: true }}, (err) ->
   console.log "Mongoose - connection error: " + err if err?
   console.log "Mongoose - connection success"
 
 
-###
-
-data = new mongoose.Schema(
-    widget:[{
-        type:String
-        position:Array
-        file:
-            type:String
-            default:""
-        url:
-            type:String
-            default:""
-        idYb:
-            type:String
-            default:""
-        content:
-            type:String
-            default:""
-        titre:
-            type:String
-            default:""
-        url:
-            type:String
-            default:""
-    }]
-    draw:
-        type:String
-        default:""
-    html:
-        type:String
-        default:""
-)
-###
 
 
 widget = new mongoose.Schema(
@@ -54,9 +22,13 @@ widget = new mongoose.Schema(
         top: String
     file:
         type:String
+    id:
+        type:String
     url:
         type:String
     idYb:
+        type:String
+    idWidget:
         type:String
     content:
         type:String
@@ -123,13 +95,14 @@ module.exports = (app) ->
             if req.body.audios[0][0] == "{"
                 widgetAudio = JSON.parse(req.body.audios)
                 widgetAudio.type = "audio"
-                widgetAudio.file = req.files.audiosFile.path
+                widgetAudio.file = req.files.audiosFile[0].path
                 mup.widget.push(widgetAudio) 
             else
                 for i in req.body.audios[0]
                     widgetAudio = JSON.parse(req.body.audios[0][_i])
                     widgetAudio.type = "audio"
                     widgetAudio.file = req.files.audiosFile[0][_i].path
+                    console.log(widgetAudio)
                     mup.widget.push(widgetAudio)
 
         #Images
@@ -137,13 +110,14 @@ module.exports = (app) ->
             if req.body.images[0][0] == "{"
                 widgetImages = JSON.parse(req.body.images)
                 widgetImages.type = "image"
-                widgetImages.file = req.files.imagesFile.path
+                widgetImages.file = req.files.imagesFile[0].path
                 mup.widget.push( widgetImages)
             else
                 for j in req.body.images[0]
                     widgetImage = JSON.parse(req.body.images[0][_j])
                     widgetImage.type = "image"
                     widgetImage.file = req.files.imagesFile[0][_j].path
+                    console.log widgetImage
                     mup.widget.push(widgetImage)
 
         #Youtube
@@ -197,8 +171,10 @@ module.exports = (app) ->
             console.log "Problème de sauvegade dans mongo: " + err if err?
             res.send(201,mup._id)
 
+        console.log mup
+
     # GET getpage /getpage?id=
-    @getPage = (req, res) ->
+    @getMup = (req, res) ->
         id = req.query.id
         if typeof(id) != "undefined"
             query = dataModel.find(null);
